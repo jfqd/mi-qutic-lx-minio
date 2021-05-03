@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -o errexit
+
+export LC_ALL=en_US.utf8
+export LANGUAGE=en_US.utf8
+export LANG=en_US.utf8
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+echo "* Get latest"
+apt-get -y update
+apt-get -y upgrade
+apt-get -y dist-upgrade
+
+echo "* Get minio for linux"
+curl -LO https://dl.min.io/server/minio/release/linux-amd64/minio
+chmod +x minio
+mv minio /usr/local/bin/minio
+
+curl -LO https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x mc
+mv mc /usr/local/bin/mc
+
+echo "* Ensure bootstrap will run next time"
+rm -rf /var/lib/bootstrap
+
+echo "* Cleaning up."
+rm -rf /usr/local/var/tmp/*
+rm /root/customize
+history -c
