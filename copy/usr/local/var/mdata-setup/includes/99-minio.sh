@@ -32,7 +32,7 @@ chown -R minio:minio "${MINIO_STORAGE}"
 echo "* Setup minio config"
 cat >> /etc/default/minio  << EOF
 MINIO_VOLUMES="${MINIO_STORAGE}"
-MINIO_OPTS="--address :9000"
+MINIO_OPTS="--address :9000 -console-address :8080"
 MINIO_ROOT_USER=${MINIO_UID}
 MINIO_ROOT_PASSWORD=${MINIO_PWD}
 
@@ -47,3 +47,6 @@ sed -i \
 
 systemctl daemon-reload
 systemctl start minio
+
+echo "* Cleanup"
+rm -rf /usr/local/var/tmp/

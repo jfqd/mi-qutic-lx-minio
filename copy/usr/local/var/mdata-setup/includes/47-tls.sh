@@ -6,7 +6,7 @@ TLS_HOME='/etc/nginx/ssl'
 mkdir -p "${TLS_HOME}"
 chmod 0750 "${TLS_HOME}"
 
-if [[ ! -f "${TLS_HOME}/private.key" ]]; then
+if [[ ! -f "${TLS_HOME}/minio.pem" ]]; then
   # Use user certificate if provided
   if mdata-get minio_tls 1>/dev/null 2>&1; then
     (
@@ -23,4 +23,6 @@ if [[ ! -f "${TLS_HOME}/private.key" ]]; then
   cp "${TLS_HOME}/minio.key" "${TLS_HOME}/private.key"
   cp "${TLS_HOME}/minio.crt" "${TLS_HOME}/public.crt"
   chmod 0640 "${TLS_HOME}"/*
+  
+  systemctl restart nginx || true
 fi
