@@ -25,6 +25,7 @@
     "zabbix_psk":            {"type": "text", "description": "zabbix PSK"},
     "logstash_redis":        {"type": "text", "description": "ip addresses of the logstash redis nodes, seperated by comma and including redis-protocoll"},
     "vfstab":                {"type": "text", "description": "nfs mountpoint for vfstab-file"},
+    "minio_server_url":      {"type": "text", "description": "minio server url including protocoll"},
     "minio_access_key":      {"type": "text", "description": "minio access key"},
     "minio_secret_key":      {"type": "text", "description": "minio secret key"},
     "minio_storage_path":    {"type": "text", "description": "will use /data if empty"},

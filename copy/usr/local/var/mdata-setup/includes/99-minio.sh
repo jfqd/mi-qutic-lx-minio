@@ -18,6 +18,12 @@ else
   MINIO_STORAGE="/data"
 fi
 
+if /native/usr/sbin/mdata-get minio_server_url 1>/dev/null 2>&1; then
+  SERVER_URL=$(/native/usr/sbin/mdata-get minio_server_url)
+else
+  SERVER_URL="https://$(hostname)"
+fi
+
 # use new data folder (filesystem or delegate)
 if [[ ! -d "${MINIO_STORAGE}" ]]; then
   mkdir "${MINIO_STORAGE}"
@@ -32,11 +38,12 @@ chown -R minio:minio "${MINIO_STORAGE}"
 echo "* Setup minio config"
 cat >> /etc/default/minio  << EOF
 MINIO_VOLUMES="${MINIO_STORAGE}"
-MINIO_OPTS="--address :9000 -console-address :8080"
+MINIO_OPTS="--address 127.0.0.1:9000 -console-address 127.0.0.1:9001"
 MINIO_ROOT_USER=${MINIO_UID}
 MINIO_ROOT_PASSWORD=${MINIO_PWD}
-
+MINIO_SERVER_URL=${SERVER_URL}
 EOF
+chmod 0640 /etc/default/minio
 
 echo "* Setup minio service"
 cp /usr/local/var/tmp/minio_service /etc/systemd/system/minio.service

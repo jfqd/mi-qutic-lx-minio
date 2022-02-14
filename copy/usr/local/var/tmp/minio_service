@@ -3,6 +3,7 @@ Description=minio
 Documentation=https://docs.min.io
 Wants=network-online.target
 After=network-online.target
+AssertFileIsExecutable=/usr/local/bin/minio
 
 [Service]
 WorkingDirectory=/usr/local/
@@ -13,6 +14,7 @@ SyslogIdentifier=Minio
 
 User=minio
 Group=minio
+ProtectProc=invisible
 
 EnvironmentFile=/etc/default/minio
 ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES
