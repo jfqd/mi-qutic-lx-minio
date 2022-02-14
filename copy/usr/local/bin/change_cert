@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+mkdir -p /etc/nginx/ssl
+if [[ -f /etc/nginx/ssl/minio.pem ]]; then
+  (
+    cd /etc/nginx/ssl
+    umask 0077
+    # Split files for nginx usage
+    openssl pkey -in minio.pem -out minio.key
+    openssl crl2pkcs7 -nocrl -certfile minio.pem | \
+      openssl pkcs7 -print_certs -out minio.crt
+    chmod 0640 ./*
+  )
+  systemctl restart nginx
+else
+  echo "ERROR: minio.pem file is missing!"
+fi
