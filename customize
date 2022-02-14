@@ -13,6 +13,10 @@ apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
 
+echo "* stop and remove ssh service"
+systemctl stop sshd.service
+systemctl disable sshd.service
+
 echo "* Get minio for linux"
 curl -LO https://dl.min.io/server/minio/release/linux-amd64/minio
 chmod +x minio
