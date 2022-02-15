@@ -13,14 +13,14 @@ apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
 
-echo "* Disable and remove rpcbind"
-apt-get -y remove rpcbind || true
-systemctl stop rpcbind.service
-systemctl disable rpcbind.service
+# echo "* Disable and remove rpcbind"
+# apt-get -y remove rpcbind || true
+# systemctl stop rpcbind.service
+# systemctl disable rpcbind.service
 
-echo "* Disable nfs-client"
-systemctl unmask nfs-client.target
-systemctl disable nfs-client.target
+# echo "* Disable nfs-client"
+# systemctl unmask nfs-client.target
+# systemctl disable nfs-client.target
 
 echo "* stop and remove ssh service"
 systemctl stop sshd.service
