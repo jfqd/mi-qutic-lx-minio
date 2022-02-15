@@ -46,6 +46,8 @@ MINIO_SERVER_URL=${SERVER_URL}
 EOF
 chmod 0640 /etc/default/minio
 
+chown -R minio:minio /data* || true
+
 echo "* Setup minio service"
 cp /usr/local/var/tmp/minio_service /etc/systemd/system/minio.service
 
