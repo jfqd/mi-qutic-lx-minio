@@ -11,7 +11,14 @@ if [[ -f /etc/nginx/ssl/minio.pem ]]; then
       openssl pkcs7 -print_certs -out minio.crt
     chmod 0640 ./*
   )
-  systemctl restart nginx
+  systemctl restart nginx || true
+  
+  cp "/etc/nginx/ssl//minio.key" "/home/minio/.minio/certs/private.key"
+  cp "/etc/nginx/ssl/minio.crt" "/home/minio/.minio/certs/public.crt"
+  chmod 0640 /home/minio/.minio/certs/*
+  chown -R minio:minio /home/minio/.minio/certs
+  
+  systemctl restart minio || true
 else
   echo "ERROR: minio.pem file is missing!"
 fi

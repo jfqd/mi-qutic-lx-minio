@@ -30,7 +30,7 @@ if [[ ! -d "${MINIO_STORAGE}" ]]; then
 fi
 
 echo "* Setup minio user"
-mkdir -p /home/minio
+mkdir -p /home/minio/.minio/certs
 addgroup minio
 adduser --disabled-password --system --quiet --home "/home/minio" --shell /bin/bash minio
 adduser minio minio
@@ -39,7 +39,7 @@ chown -R minio:minio /home/minio
 echo "* Setup minio config"
 cat >> /etc/default/minio  << EOF
 MINIO_VOLUMES="${MINIO_STORAGE}"
-MINIO_OPTS="--address 127.0.0.1:9000 -console-address 127.0.0.1:9001"
+MINIO_OPTS="--address :9000 -console-address 127.0.0.1:9001"
 MINIO_ROOT_USER=${MINIO_UID}
 MINIO_ROOT_PASSWORD=${MINIO_PWD}
 MINIO_SERVER_URL=${SERVER_URL}

@@ -20,9 +20,11 @@ if [[ ! -f "${TLS_HOME}/minio.pem" ]]; then
   else
     /usr/local/bin/tls-selfsigned.sh -d ${TLS_HOME} -f minio
   fi
-  cp "${TLS_HOME}/minio.key" "${TLS_HOME}/private.key"
-  cp "${TLS_HOME}/minio.crt" "${TLS_HOME}/public.crt"
+  cp "${TLS_HOME}/minio.key" "/home/minio/.minio/certs/private.key"
+  cp "${TLS_HOME}/minio.crt" "/home/minio/.minio/certs/public.crt"
   chmod 0640 "${TLS_HOME}"/*
+  chmod 0640 /home/minio/.minio/certs/*
+  chown -R minio:minio /home/minio/.minio/certs
   
   systemctl restart nginx || true
 fi
