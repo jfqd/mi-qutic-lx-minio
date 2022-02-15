@@ -30,10 +30,11 @@ if [[ ! -d "${MINIO_STORAGE}" ]]; then
 fi
 
 echo "* Setup minio user"
+mkdir -p /home/minio
 addgroup minio
-adduser --disabled-password --system --quiet --home "${MINIO_STORAGE}" --shell /bin/bash minio
+adduser --disabled-password --system --quiet --home "/home/minio" --shell /bin/bash minio
 adduser minio minio
-chown -R minio:minio "${MINIO_STORAGE}"
+chown -R minio:minio /home/minio
 
 echo "* Setup minio config"
 cat >> /etc/default/minio  << EOF
@@ -48,9 +49,9 @@ chmod 0640 /etc/default/minio
 echo "* Setup minio service"
 cp /usr/local/var/tmp/minio_service /etc/systemd/system/minio.service
 
-sed -i \
-    "s#WorkingDirectory=/usr/local/#WorkingDirectory=${MINIO_STORAGE}#" \
-    /etc/systemd/system/minio.service
+# sed -i \
+#     "s#WorkingDirectory=/usr/local/#WorkingDirectory=${MINIO_STORAGE}#" \
+#     /etc/systemd/system/minio.service
 
 systemctl daemon-reload
 systemctl start minio
