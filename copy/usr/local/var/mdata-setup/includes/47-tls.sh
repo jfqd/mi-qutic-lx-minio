@@ -1,6 +1,6 @@
-# Default
+#!/usr/bin/bash
+
 TLS_HOME='/etc/nginx/ssl'
-# '/data/.minio/certs'
 
 # Create folder if it doesn't exists
 mkdir -p "${TLS_HOME}"

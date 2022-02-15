@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 if /native/usr/sbin/mdata-get minio_access_key 1>/dev/null 2>&1; then
   MINIO_UID=$(/native/usr/sbin/mdata-get minio_access_key)
